@@ -7,4 +7,4 @@ This repo contains test infrastructure related files. </br>
 
 ## How to run
 `docker-compose up -d` </br>
-This will create needed containers `kafka` and 'influxdb`
+This will create needed containers `kafka` and `influxdb`
