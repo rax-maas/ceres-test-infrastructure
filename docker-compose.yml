@@ -28,12 +28,23 @@ services:
           #- ${PWD}/influxdb:/var/lib/influxdb
           - ${PWD}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
 
-  telegraf:
-      image: telegraf:latest
-      container_name: telegraf
-      volumes:
-          - ${PWD}/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+  redis:
+      image: 'bitnami/redis:latest'
+      container_name: redis
+      environment:
+        - ALLOW_EMPTY_PASSWORD=yes
       ports:
-          - "8092:8092/udp"
-          - "8094:8094"
-          - "8125:8125/udp"
+        - '6379:6379'
+      # volumes:
+      #   - /path/to/redis-persistence:/bitnami/redis/data
+
+
+  # telegraf:
+  #     image: telegraf:latest
+  #     container_name: telegraf
+  #     volumes:
+  #         - ${PWD}/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+  #     ports:
+  #         - "8092:8092/udp"
+  #         - "8094:8094"
+  #         - "8125:8125/udp"
