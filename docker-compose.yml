@@ -19,11 +19,20 @@ services:
     depends_on:
       - zookeeper
 
-  influxdb:
+  influxdb-0:
       image: influxdb:latest
-      container_name: influxdb
+      container_name: influxdb-0
       ports:
           - "8086:8086"
+      volumes:
+          #- ${PWD}/influxdb:/var/lib/influxdb
+          - ${PWD}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+
+  influxdb-1:
+      image: influxdb:latest
+      container_name: influxdb-1
+      ports:
+          - "8087:8086"
       volumes:
           #- ${PWD}/influxdb:/var/lib/influxdb
           - ${PWD}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
@@ -38,13 +47,12 @@ services:
       # volumes:
       #   - /path/to/redis-persistence:/bitnami/redis/data
 
-
-  # telegraf:
-  #     image: telegraf:latest
-  #     container_name: telegraf
-  #     volumes:
-  #         - ${PWD}/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-  #     ports:
-  #         - "8092:8092/udp"
-  #         - "8094:8094"
-  #         - "8125:8125/udp"
+  telegraf:
+      image: telegraf:latest
+      container_name: telegraf
+      volumes:
+          - ${PWD}/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      ports:
+          - "8092:8092/udp"
+          - "8094:8094"
+          - "8125:8125/udp"
