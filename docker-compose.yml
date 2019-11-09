@@ -12,29 +12,20 @@ services:
       - "9092:9092"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_CREATE_TOPICS: "unified.metrics.json:3:1"
+      # topic string structure is "topic-name:partition:replica"
+      KAFKA_CREATE_TOPICS: "unified.metrics.json:3:1,uim.metrics.json:3:1,zenoss.metrics.json:3:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - zookeeper
 
-  influxdb-0:
+  localhost:
       image: influxdb:latest
-      container_name: influxdb-0
+      container_name: influxdb
       ports:
           - "8086:8086"
       volumes:
-          #- ${PWD}/influxdb:/var/lib/influxdb
-          - ${PWD}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
-
-  influxdb-1:
-      image: influxdb:latest
-      container_name: influxdb-1
-      ports:
-          - "8087:8086"
-      volumes:
-          #- ${PWD}/influxdb:/var/lib/influxdb
           - ${PWD}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
 
   redis:
@@ -44,15 +35,3 @@ services:
         - ALLOW_EMPTY_PASSWORD=yes
       ports:
         - '6379:6379'
-      # volumes:
-      #   - /path/to/redis-persistence:/bitnami/redis/data
-
-#  telegraf:
-#      image: telegraf:latest
-#      container_name: telegraf
-#      volumes:
-#          - ${PWD}/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-#      ports:
-#          - "8092:8092/udp"
-#          - "8094:8094"
-#          - "8125:8125/udp"
