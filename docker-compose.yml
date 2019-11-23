@@ -13,7 +13,7 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       # topic string structure is "topic-name:partition:replica"
-      KAFKA_CREATE_TOPICS: "unified.metrics.json:3:1,uim.metrics.json:3:1,zenoss.metrics.json:3:1"
+      KAFKA_CREATE_TOPICS: "unified.metrics.json:3:1,unified.metrics.json.5m:3:1,unified.metrics.json.20m:3:1,unified.metrics.json.60m:3:1,unified.metrics.json.240m:3:1,unified.metrics.json.1440m:3:1,uim.metrics.json:3:1,zenoss.metrics.json:3:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -35,3 +35,9 @@ services:
         - ALLOW_EMPTY_PASSWORD=yes
       ports:
         - '6379:6379'
+
+  repose:
+      image: 'rackerlabs/repose:latest'
+      container_name: repose
+      ports:
+        - '8080:8080'
