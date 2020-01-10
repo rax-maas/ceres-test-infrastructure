@@ -36,8 +36,22 @@ services:
       ports:
         - '6379:6379'
 
-  repose:
-      image: 'rackerlabs/repose:latest'
-      container_name: repose
-      ports:
-        - '8080:8080'
+  repose-public:
+    image: rackerlabs/repose:${REPOSE_VERSION:-9.0.0.0}
+    ports:
+      - 8180:8080
+    env_file:
+      - common.env
+    environment:
+      KEYSTONE_USER: ${KEYSTONE_USER}
+      KEYSTONE_PASSWORD: ${KEYSTONE_PASSWORD}
+      BACKEND_HOST: ${REPOSE_BACKEND_HOST}
+      BACKEND_PORT: 8080
+    volumes:
+      - ./repose-config:/etc/repose
+    networks:
+      - infra
+
+networks:
+  infra:
+    external: true
