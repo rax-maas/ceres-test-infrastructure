@@ -1,0 +1,67 @@
+_type: export
+__export_format: 4
+__export_date: 2020-01-10T22:11:31.738Z
+__export_source: insomnia.desktop.app:v7.0.6
+resources:
+  - _id: req_1b9944d83acb457984b005c2ddb8e8c9
+    authentication: {}
+    body: {}
+    created: 1578693760819
+    description: ""
+    headers:
+      - disabled: false
+        id: pair_1824778a0fed4ba89f3719ba0acb7ba8
+        name: x-auth-token
+        value: ""
+      - id: pair_8c0ca56c2e0b4b48a7de037cc0dc1e15
+        name: Cookie
+        value: JSESSIONID=node02j8tcmeo1izdi4pk9dfef8a10.node0;
+          JSESSIONID=31C2DFFED4BAB50DFACE417D054252E7
+    isPrivate: false
+    metaSortKey: -1578693760819
+    method: GET
+    modified: 1578694045146
+    name: http://localhost:8180/v1.0/tenant/811050/intelligence-format-query
+    parameters:
+      - disabled: false
+        id: pair_cc8ee770aefd4b13b08cbb39c26bdf9e
+        name: db
+        value: ENCORE-MAAS-account-name-0
+      - disabled: false
+        id: pair_3243e22a4d764f3d88b428b9b901c669
+        name: q
+        value: select * from MAAS_cpu where time >= now()-8h
+    parentId: wrk_f8d08bad498a45aaae2305e39f489d79
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8180/v1.0/tenant/811050/intelligence-format-query
+    _type: request
+  - _id: wrk_f8d08bad498a45aaae2305e39f489d79
+    created: 1578686838398
+    description: ""
+    modified: 1578686838398
+    name: QueryService
+    parentId: null
+    _type: workspace
+  - _id: env_02674ee02ce3237657cb5622c90fad523917dd18
+    color: null
+    created: 1578686838430
+    data: {}
+    dataPropertyOrder: null
+    isPrivate: false
+    metaSortKey: 1578686838431
+    modified: 1578686838430
+    name: Base Environment
+    parentId: wrk_f8d08bad498a45aaae2305e39f489d79
+    _type: environment
+  - _id: jar_02674ee02ce3237657cb5622c90fad523917dd18
+    cookies: []
+    created: 1578686838434
+    modified: 1578686838434
+    name: Default Jar
+    parentId: wrk_f8d08bad498a45aaae2305e39f489d79
+    _type: cookie_jar
