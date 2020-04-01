@@ -20,7 +20,7 @@ services:
     depends_on:
       - zookeeper
 
-  localhost:
+  influxdb:
       image: influxdb:latest
       container_name: influxdb
       ports:
