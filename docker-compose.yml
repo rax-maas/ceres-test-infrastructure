@@ -1,13 +1,23 @@
 version: '3.4'
 
 services:
+  # main is a "virtual" service that brings up the essential services needed
+  # for the applications to run
+  main:
+    image: google/pause
+    depends_on:
+      - kafka
+      - influxdb
+      - redis
+
   zookeeper:
+    # no useful tags for zookeeper image, so just go with latest
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
   kafka:
     container_name: kafka-node
-    image: wurstmeister/kafka
+    image: wurstmeister/kafka:${KAFKA_VERSION:-2.12-2.4.1}
     ports:
       - "9092:9092"
     environment:
@@ -21,15 +31,16 @@ services:
       - zookeeper
 
   influxdb:
-      image: influxdb:latest
+      image: influxdb:${INFLUXDB_VERSION:-1.7-alpine}
       container_name: influxdb
       ports:
           - "8086:8086"
       volumes:
           - ${PWD}/influxdb.conf:/etc/influxdb/influxdb.conf:ro
+          - influxdb:/var/lib/influxdb
 
   redis:
-      image: 'bitnami/redis:latest'
+      image: bitnami/redis:${REDIS_VERSION:-5.0.9}
       container_name: redis
       environment:
         - ALLOW_EMPTY_PASSWORD=yes
@@ -37,7 +48,7 @@ services:
         - '6379:6379'
 
   repose-public:
-    image: rackerlabs/repose:${REPOSE_VERSION:-9.0.0.0}
+    image: rackerlabs/repose:${REPOSE_VERSION:-9.0.1.0}
     ports:
       - 8180:8080
     env_file:
@@ -45,20 +56,22 @@ services:
     environment:
       KEYSTONE_USER: ${KEYSTONE_USER}
       KEYSTONE_PASSWORD: ${KEYSTONE_PASSWORD}
-      BACKEND_HOST: ${REPOSE_BACKEND_HOST}
-      BACKEND_PORT: 8080
+      BACKEND_HOST: ${BACKEND_HOST:-host.docker.internal}
+      BACKEND_PORT: ${BACKEND_PORT:-8080}
     volumes:
       - ./repose-config:/etc/repose
-    networks:
-      - infra
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:${GRAFANA_VERSION:-6.7.2}
     container_name: grafana
-    restart: always
     ports:
       - 3000:3000
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./grafana-config/datasources.yml:/etc/grafana/provisioning/datasources/main.yml:ro
+      - ./grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/local.yml:ro
+      - ./grafana-config/dashboards:/var/lib/grafana/dashboards:ro
 
-networks:
-  infra:
-    external: true
+volumes:
+  influxdb: {}
+  grafana: {}
