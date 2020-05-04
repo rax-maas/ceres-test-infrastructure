@@ -84,3 +84,11 @@ Datasource | Description | Editable?
 Query Service | Accesses Ceres data via the Grafana query endpoint. | Yes, such as changing database
 InfluxDB Direct | Also access Ceres data, but directly from InfluxDB | Yes, such as changing database
 Ceres App Metrics | Provides access to the Spring Boot application metrics | No
+
+## Accessing Redis
+
+Redis can be manually queried by executing the redis CLI within the container:
+
+```
+docker exec -it redis redis-cli
+```
