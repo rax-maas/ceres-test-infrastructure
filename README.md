@@ -5,7 +5,7 @@ The [`docker-compose.yml`](docker-compose.yml) file contains following services:
 - `zookeeper` and `kafka` - Here `Kafka` is used for creating source data when using it in `Ingestion-Service` microservice.
 - `influxdb` service is used to store the output of `Ingestion-Service` microservice.
 - `redis` service is used in tenant-routing-service.
-- `grafana` which can be used to test the Grafan datasource endpoint of the query service
+- `grafana` which can be used to test the Grafana datasource endpoint of the query service
 
 ## How to run
 
