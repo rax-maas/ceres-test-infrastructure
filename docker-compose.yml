@@ -64,12 +64,13 @@ services:
   grafana:
     image: grafana/grafana:${GRAFANA_VERSION:-6.7.2}
     container_name: grafana
-    restart: always
     ports:
       - 3000:3000
     volumes:
       - grafana:/var/lib/grafana
       - ./grafana-config/datasources.yml:/etc/grafana/provisioning/datasources/main.yml:ro
+      - ./grafana-config/dashboards.yml:/etc/grafana/provisioning/dashboards/local.yml:ro
+      - ./grafana-config/dashboards:/var/lib/grafana/dashboards:ro
 
 volumes:
   influxdb: {}
