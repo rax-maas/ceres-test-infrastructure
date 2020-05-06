@@ -31,7 +31,7 @@ services:
       - zookeeper
 
   influxdb:
-      image: influxdb:${INFLUXDB_VERSION:-1.7-alpine}
+      image: influxdb:${INFLUXDB_VERSION:-1.8-alpine}
       container_name: influxdb
       ports:
           - "8086:8086"
